@@ -5,9 +5,9 @@ class CranServer
 
   PACKAGES_FILE = "PACKAGES"
 
-  def initialize(source_url, http_client, dcf_parser = Dcf)
+  def initialize(source_url, http_client = NetHttpAdapter, dcf_parser = Dcf)
     @url    = source_url
-    @client = http_client.new @url
+    @client = http_client.new url
     @parser = dcf_parser
   end
 
