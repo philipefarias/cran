@@ -13,6 +13,7 @@ gem "jbuilder", "~> 2.0"
 gem "sdoc", "~> 0.4.0", group: :doc
 
 gem "treetop-dcf"
+gem "puma"
 
 gem "crono"
 gem "haml"
@@ -30,3 +31,4 @@ group :test do
   gem "shoulda-matchers"
 end
 
+gem 'rails_12factor', group: :production
