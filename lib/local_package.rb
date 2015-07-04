@@ -39,9 +39,7 @@ class LocalPackage
 
   def extract_description(package, package_name)
     raw = extract_from_tar_gz package.path, package_name, "DESCRIPTION"
-    parse(raw).transform_keys! do |key|
-      key.gsub(/(.*\/)*(.+)/, '\2').underscore.to_sym
-    end
+    parse(raw)
   end
 
   def extract_from_tar_gz(path, package_name, filename)

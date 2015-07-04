@@ -7,19 +7,19 @@ RSpec.describe LocalPackage do
   describe "#description" do
     let(:expected) do
       {
-        package: "Dummy",
-        type: "Package",
-        title: "Dummy Package",
-        version: "0.0.1",
-        date: "2015-07-04",
-        author: "Philipe Farias",
-        maintainer: "Philipe Farias <philipefairas@gmail.com>",
-        description: "Package to be used in tests",
-        license: "GPL-3",
-        needs_compilation: "no",
-        packaged: "2015-07-04 08:00:18 UTC; philipefarias",
-        repository: "CRAN",
-        publication: "2015-07-04 08:30:07"
+        "Author" => "Philipe Farias",
+        "Date" => "2015-07-04",
+        "Date/Publication" => "2015-07-04 08:30:07",
+        "Description" => "Package to be used in tests",
+        "License" => "GPL-3",
+        "Maintainer" => "Philipe Farias <philipefairas@gmail.com>",
+        "NeedsCompilation" => "no",
+        "Package" => "Dummy",
+        "Packaged" => "2015-07-04 08:00:18 UTC; philipefarias",
+        "Repository" => "CRAN",
+        "Title" => "Dummy Package",
+        "Type" => "Package",
+        "Version" => "0.0.1"
       }
     end
 
