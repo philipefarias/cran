@@ -4,4 +4,10 @@ class Person < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: true
+
+  def to_s
+    s = name
+    s << " <#{email}>" if email.present?
+    s
+  end
 end
