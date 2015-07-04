@@ -7,8 +7,12 @@ RSpec.describe Package, type: :model do
   end
 
   context "validations" do
+    subject { Package.new name: "Dummy", version: "0.0.1", publication: Date.today }
+
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:version) }
     it { should validate_presence_of(:publication) }
+
+    it { should validate_uniqueness_of(:version).scoped_to(:name) }
   end
 end
