@@ -11,16 +11,18 @@ class CranServer
     @parser = dcf_parser
   end
 
-  def list
-    fetch_packages_list
+  def list(count = nil)
+    fetch_packages_list count
   end
 
   private
 
   attr_reader :client, :parser
 
-  def fetch_packages_list
-    parsed = parse get_packages_list
+  def fetch_packages_list(count)
+    packages_list = get_packages_list
+    packages_list = packages_list.split("\n\n").take(count).join("\n\n") if count
+    parsed = parse packages_list
 
     parsed.map! do |package|
       package.inject({}) do |trans, (k,v)|
