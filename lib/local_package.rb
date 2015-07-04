@@ -22,11 +22,20 @@ class LocalPackage
   attr_reader :name, :version, :source, :parser, :io
 
   def tempfile(name, version)
-    Tempfile.new(filename(name, version)).tap do |f|
+    Tempfile.new(filename(name, version), tmp_folder, encoding: encoding).tap do |f|
       io.rewind
       f.write io.read
       f.close
     end
+  end
+
+  def encoding
+    io.rewind
+    io.read.encoding
+  end
+
+  def tmp_folder
+    Rails.root.join("tmp")
   end
 
   def uri_for(name, version)
