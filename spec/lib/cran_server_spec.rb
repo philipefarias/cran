@@ -1,6 +1,5 @@
 require "active_support/core_ext/string/strip"
 require "lib/cran_server"
-require "yaml"
 
 RSpec.describe CranServer do
   subject { described_class.new source_url, http_client }
