@@ -1,11 +1,14 @@
 require "bundler/setup"
-require 'rubygems/package'
+require "rubygems/package"
 require "net/http"
 require "open-uri"
 require "dcf"
 
 SOURCE_URL = "http://cran.r-project.org/src/contrib/"
 PACKAGES_URL = SOURCE_URL + "PACKAGES"
+
+###
+# Handling the packages list
 
 def fetch_packages_list(count = nil)
   parse_packages_list get_packages_list, count
@@ -28,43 +31,57 @@ def parse_packages_list(packages_list, count)
   end
 end
 
-def parse_dcf(content)
-  Dcf.parse content
-end
 
-def package_name(name, version)
-  "#{name}_#{version}.tar.gz"
-end
+###
+# Handling the package
 
-def package_uri(name, version)
-  URI.parse "#{SOURCE_URL}#{package_name(name, version)}"
-end
-
+# making a local copy
 def local_package(name, version)
   io = package_uri(name, version).open
 
-  Tempfile.new(package_name(name, version)).tap do |f|
+  Tempfile.new(filename(name, version)).tap do |f|
     io.rewind
     f.write io.read
     f.close
   end
 end
 
+def package_uri(name, version)
+  URI.parse "#{SOURCE_URL}#{filename(name, version)}"
+end
+
+def filename(name, version)
+  "#{name}_#{version}.tar.gz"
+end
+
+# getting the important info
 def extract_description(package, package_name)
   raw = extract_from_tar package.path, package_name, "DESCRIPTION"
   parse_dcf raw
 end
 
-def extract_from_tar(path, package, filename)
+def extract_from_tar(path, package_name, filename)
   content = ""
   gzip = Zlib::GzipReader.open(path)
 
   Gem::Package::TarReader.new gzip do |tar|
-    content << tar.seek("#{package}/#{filename}", &:read)
+    content << tar.seek("#{package_name}/#{filename}", &:read)
   end
 
   content
 end
+
+
+###
+# Utils
+
+def parse_dcf(content)
+  Dcf.parse content
+end
+
+
+###
+# Doing stuff
 
 packages = fetch_packages_list 3
 packages.each do |(name, version)|
